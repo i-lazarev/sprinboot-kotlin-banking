@@ -1,7 +1,6 @@
 package ion.lazarev.springboot.demo.datasource.mock
 
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class MockBankDataSourceTest {

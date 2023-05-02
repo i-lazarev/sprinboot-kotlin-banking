@@ -26,7 +26,7 @@ internal class BankControllerTest @Autowired constructor(
 
     @Nested
     @DisplayName("GET /api/banks")
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestInstance(Lifecycle.PER_CLASS)
     inner class GetBanks {
         @Test
         fun `should return all banks`() {
@@ -43,7 +43,7 @@ internal class BankControllerTest @Autowired constructor(
 
     @Nested
     @DisplayName("GET /api/banks/{accountNumber}")
-    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    @TestInstance(Lifecycle.PER_CLASS)
     inner class GetBank {
         @Test
         fun `should return the bank with the given account number`() {

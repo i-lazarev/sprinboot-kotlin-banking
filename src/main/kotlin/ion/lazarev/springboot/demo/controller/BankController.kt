@@ -3,7 +3,6 @@ package ion.lazarev.springboot.demo.controller
 import ion.lazarev.springboot.demo.model.Bank
 import ion.lazarev.springboot.demo.service.BankService
 import org.springframework.http.HttpStatus
-import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
@@ -33,7 +32,7 @@ class BankController(private val service: BankService) {
     fun getBank(@PathVariable accountNumber: String): Bank = service.getBank(accountNumber)
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED, ) // to get status 201(created) not 200(success)
+    @ResponseStatus(HttpStatus.CREATED) // to get status 201(created) not 200(success)
     fun addBank(@RequestBody newBank: Bank): Bank = service.addBank(newBank)
 
 }
