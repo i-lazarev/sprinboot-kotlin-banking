@@ -8,4 +8,6 @@ interface BankDataSource {
     fun retrieveBank(accountNumber: String): Bank
 
     fun postBank(newBank: Bank): Bank
+
+    fun patchBank(data: Bank): Bank
 }
