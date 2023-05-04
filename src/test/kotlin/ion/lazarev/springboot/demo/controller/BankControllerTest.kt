@@ -51,12 +51,14 @@ internal class BankControllerTest @Autowired constructor(
             val accountNumber = "B234"
 
             //when / then
-            mockMvc.get("$baseURL/$accountNumber").andDo { println() }.andExpect {
-                status { isOk() }
-                content { contentType(MediaType.APPLICATION_JSON) }
-                jsonPath("$.trust") { value(4.0) }
-                jsonPath("$.transactionFee") { value(15) }
-            }
+            mockMvc.get("$baseURL/$accountNumber")
+                .andDo { println() }
+                .andExpect {
+                    status { isOk() }
+                    content { contentType(MediaType.APPLICATION_JSON) }
+                    jsonPath("$.trust") { value(4.0) }
+                    jsonPath("$.transactionFee") { value(15) }
+                }
 
 
         }
@@ -158,9 +160,9 @@ internal class BankControllerTest @Autowired constructor(
             mockMvc.get("$baseURL/${updateBank.accountNumber}")
                 .andExpect { content { json(objectMapper.writeValueAsString(updateBank)) } }
         }
-        
+
         @Test
-        fun `should return BAD REQUEST if no bank with given account number exists`(){
+        fun `should return BAD REQUEST if no bank with given account number exists`() {
             val invalidBank = Bank("B1236789", 2.6, 4)
 
             //when
@@ -173,11 +175,38 @@ internal class BankControllerTest @Autowired constructor(
             performPatch
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
-            
-         }
-
+        }
 
     }
 
+    @Nested
+    @DisplayName("DELETE /api/banks/{accountNumber}")
+    @TestInstance(Lifecycle.PER_CLASS)
+    inner class DeleteBank {
+        @Test
+        fun `should delete the bank with the given account number`() {
+            //given
+            val accountNumber = "B123"
 
+            //when / then
+            mockMvc.delete("$baseURL/$accountNumber")
+                .andDo { print() }
+                .andExpect {
+                    status { isNoContent() }
+                }
+            mockMvc.get("$baseURL/$accountNumber")
+                .andExpect { status { isNotFound() } }
+        }
+
+        @Test
+        fun `should return NOT FOUNT if the account number does not exist`() {
+            //given
+            val accountNumber = "does_not_exists"
+
+            //when / then
+            mockMvc.get("$baseURL/$accountNumber")
+                .andDo { print() }
+                .andExpect { status { isNotFound() } }
+        }
+    }
 }
